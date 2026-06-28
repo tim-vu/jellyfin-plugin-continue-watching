@@ -1,0 +1,65 @@
+name: Release Plugin
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - build.yaml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check plugin version change
+        id: version
+        shell: bash
+        run: |
+          version="$(sed -n 's/^version: "\(.*\)"/\1/p' build.yaml)"
+          if [ -z "$version" ]; then
+            echo "Unable to read version from build.yaml" >&2
+            exit 1
+          fi
+
+          tag="v${version}"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Release tag $tag already exists. Update build.yaml version before merging to master." >&2
+            exit 1
+          fi
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Setup .NET
+        if: steps.version.outputs.changed == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Package plugin
+        if: steps.version.outputs.changed == 'true'
+        id: jprm
+        uses: oddstr13/jellyfin-plugin-repository-manager@v1.1.1
+        with:
+          dotnet-target: net9.0
+
+      - name: Create GitHub release
+        if: ${{ steps.version.outputs.changed == 'true' && !env.ACT }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "${{ steps.version.outputs.version }}" \
+            --notes "" \
+            "${{ steps.jprm.outputs.artifact }}"

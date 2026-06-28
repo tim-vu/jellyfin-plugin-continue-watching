@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Jellyfin.Plugin.ContinueWatching/Jellyfin.Plugin.ContinueWatching.csproj" />
+  <Project Path="src/Jellyfin.Plugin.HomeScreenSections.Client/Jellyfin.Plugin.HomeScreenSections.Client.csproj" />
+</Solution>

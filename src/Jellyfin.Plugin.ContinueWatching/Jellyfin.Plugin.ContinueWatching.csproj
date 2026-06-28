@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <CopyToLocalJellyfin Condition="'$(CopyToLocalJellyfin)' == ''">true</CopyToLocalJellyfin>
+    <JellyfinPluginDirectory Condition="'$(JellyfinPluginDirectory)' == ''">$(HOME)/.local/share/jellyfin/plugins/ContinueWatching</JellyfinPluginDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jellyfin.Controller" Version="10.11.11">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Jellyfin.Model" Version="10.11.11">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Jellyfin.Plugin.HomeScreenSections.Client/Jellyfin.Plugin.HomeScreenSections.Client.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyToLocalJellyfin" AfterTargets="Build" Condition="'$(CopyToLocalJellyfin)' == 'true'">
+    <ItemGroup>
+      <PluginOutput Include="$(TargetDir)$(AssemblyName).dll" />
+      <PluginOutput Include="$(TargetDir)$(AssemblyName).pdb" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
+      <PluginOutput Include="$(TargetDir)$(AssemblyName).deps.json" Condition="Exists('$(TargetDir)$(AssemblyName).deps.json')" />
+      <PluginOutput Include="$(TargetDir)Jellyfin.Plugin.HomeScreenSections.Client.dll" />
+      <PluginOutput Include="$(TargetDir)Jellyfin.Plugin.HomeScreenSections.Client.pdb" Condition="Exists('$(TargetDir)Jellyfin.Plugin.HomeSections.pdb')" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(JellyfinPluginDirectory)" />
+    <Copy SourceFiles="@(PluginOutput)" DestinationFolder="$(JellyfinPluginDirectory)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
