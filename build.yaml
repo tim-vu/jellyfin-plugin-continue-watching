@@ -1,13 +1,12 @@
----
 name: "Continue Watching"
 guid: "7b3f1b70-4d0e-4d9d-a92d-5e2f632b91c1"
-version: "1.0.2.0"
-targetAbi: "10.11.11.0"
-framework: "net9.0"
-overview: "Continue Watching updates Jellyfin's default resume list to work like you expect it to"
+version: "1.1.0.0"
+targetAbi: "12.0.0.0"
+framework: "net10.0"
+overview: "Updates Continue Watching to work like you export"
 description: >
-  Updates Jellyfin's default resume list to work like you expect it to.
-  Works with and without IAmParadox27's Home Screen Sections plugin.
+  Updates the Continue Watching section to work like you expect it to.
+  Works with and without the Home Screen Sections plugin.
   Supported by all clients.
 category: "General"
 owner: "timvu"
@@ -15,4 +14,4 @@ artifacts:
 - "Jellyfin.Plugin.ContinueWatching.dll"
 - "Jellyfin.Plugin.HomeScreenSections.Client.dll"
 changelog: >
-  Fix uninstall button
+  Add support for Jellyfin v12.0-rc2
