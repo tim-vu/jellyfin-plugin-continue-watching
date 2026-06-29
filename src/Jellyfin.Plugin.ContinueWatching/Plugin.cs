@@ -18,10 +18,7 @@ public class Plugin : IPlugin
 
     public string AssemblyFilePath { get; } = typeof(Plugin).Assembly.Location;
 
-    public bool CanUninstall => !string.Equals(
-        Path.GetDirectoryName(AssemblyFilePath),
-        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-        StringComparison.Ordinal);
+    public bool CanUninstall => true;
 
     public string DataFolderPath { get; } = string.Empty;
 
