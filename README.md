@@ -2,14 +2,16 @@
 
 ## A Jellyfin Plugin
 
-Continue Watching updates Jellyfin's default resume list to work like you expect it to.
+Continue Watching replaces Jellyfin's built-in `Continue Watching` home screen section with one simple place to pick up where you left off.
 
-## Features
+If you stop a movie halfway through, the movie stays there. If you are watching a show, the show stays there as one item, pointing at the episode you should continue with.
 
-- Tracks movies and series.
-- One entry per in-progress series.
-- Home Screen Sections integration.
-- No separate client patching required.
+Why this helps:
+
+- Your home screen shows one entry for a show, not a clutter of episodes.
+- Finish an episode and the show stays ready with the next episode.
+- You do not need to mark episodes watched or unwatched just to make your home screen look right.
+- Movies leave the section when you finish them. Shows leave when there is nothing left to continue.
 
 ## Installation
 
@@ -27,11 +29,11 @@ Continue Watching updates Jellyfin's default resume list to work like you expect
 
 2. Install `Continue Watching` from the plugin catalogue.
 3. Restart Jellyfin.
-4. The Continue Watching section will only reappear once you start watching a movie or series.
+4. If you use Home Screen Sections, use the new `Continue Watching` section at the bottom instead of the built-in `Continue Watching` up top.
+5. (Optional) Remove the Next Up section from your clients. You no longer need it.
 
-### Home Screen Sections
-
-If you use Home Screen Sections, use the new `Continue Watching` section at the bottom instead of the built-in `Continue Watching` up top.
+> [!IMPORTANT]
+> The Continue Watching section will only reappear once you start watching a movie or series
 
 ---
 
